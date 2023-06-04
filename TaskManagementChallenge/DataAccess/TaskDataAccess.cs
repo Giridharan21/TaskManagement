@@ -62,7 +62,6 @@ namespace TaskManagementChallenge.DataAccess
             //update the task's name, description, and status properties
             task.Name = model.Name;
             task.Description = model.Description;
-            task.Status = model.Status;
             //save changes
             _context.SaveChanges();
         }

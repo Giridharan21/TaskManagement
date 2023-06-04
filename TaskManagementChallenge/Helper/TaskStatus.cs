@@ -6,7 +6,7 @@
         public const string Created = "Created";
         public const string InProgress = "In Progress";
         public const string Completed = "Completed";
-        public const string InComplete = "InComplete";
+        public const string InComplete = "Incomplete";
     }
 
     //static method to return all statuses

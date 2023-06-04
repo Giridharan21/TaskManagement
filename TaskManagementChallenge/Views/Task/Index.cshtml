@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<TaskManagementChallenge.Models.ListTaskViewModel>
-
+@using TaskManagementChallenge.Helper;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Home";
 }
 
-<h1>Index</h1>
+<h1>Your Tasks</h1>
 
 <p>
-    <a asp-action="AddTask">Create New</a>
+    <a asp-action="AddTask" class=" btn btn-primary">Create New</a>
 </p>
 
 @{
     if(Model.Count() > 0)
     {
-        <table class="table">
+        <table class="table table-bordered table-striped ">
             <thead>
                 <tr>
                     <th>
@@ -26,6 +26,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Status)
                     </th>
+                    <th>Status Update</th>
                     <th></th>
                 </tr>
             </thead>
@@ -43,8 +44,38 @@
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
                         <td>
-                            <a asp-action="UpdateTask" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="DeleteTask" asp-route-id="@item.Id">Delete</a>
+
+                            @{
+                                if (item.Status == CustomTaskStatus.Completed)
+                                {
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.InProgress">In Progress</a>
+                                }
+                                if (item.Status == CustomTaskStatus.InComplete)
+                                {
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.Completed">Complete</a> 
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.InProgress">In Progress</a>
+                                }
+                                if (item.Status == CustomTaskStatus.Created)
+                                {
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.InProgress">In Progress</a> 
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.Completed">Complete</a>
+
+                                }
+                                if (item.Status == CustomTaskStatus.InProgress)
+                                {
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.Completed">Complete</a> 
+                                    <a class="btn btn-secondary" asp-action="UpdateTaskStatus" asp-route-id="@item.Id" asp-route-status="@CustomTaskStatus.InComplete">In Complete</a>
+                                }
+
+                            }
+
+                            
+                            
+
+                        </td>
+                        <td>
+                            <a class="btn btn-info" asp-action="UpdateTask" asp-route-id="@item.Id">Edit</a> 
+                            <a class="btn btn-danger" asp-action="DeleteTask" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
                 }

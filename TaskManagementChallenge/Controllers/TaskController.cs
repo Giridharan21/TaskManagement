@@ -94,7 +94,20 @@ namespace TaskManagementChallenge.Controllers
             return RedirectToAction("Index");
         }
 
-
+        //method to update task status from TaskUpdateStatusViewModel
+        public IActionResult UpdateTaskStatus(TaskUpdateStatusViewModel model)
+        {
+            //check if the model is valid
+            if (ModelState.IsValid)
+            {
+                //update the task's status
+                _taskDataAccess.UpdateTaskStatus(model);
+                //redirect to the index action
+                return RedirectToAction("Index");
+            }
+            //if the model is not valid, return the view with the model
+            return View(model);
+        }
 
     }
 }
