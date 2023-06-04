@@ -36,6 +36,60 @@ namespace TaskManagementChallenge.DataAccess
         }
 
 
+        //method to add task from TaskCreationViewModel
+        public void AddTask(TaskCreationViewModel model)
+        {
+            //create a new Tasks object
+            var task = new Tasks
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Status = model.Status,
+                CreatedBy = model.CreatedBy
+            };
+            //add the task to the Tasks DbSet
+            _context.Tasks.Add(task);
+            //save changes
+            _context.SaveChanges();
+        }
+
+
+        //method to update task from TaskUpdateViewModel
+        public void UpdateTask(TaskUpdateViewModel model)
+        {
+            //get the task from the Tasks DbSet where the task's id matches the id passed in
+            var task = _context.Tasks.Find(model.Id);
+            //update the task's name, description, and status properties
+            task.Name = model.Name;
+            task.Description = model.Description;
+            task.Status = model.Status;
+            //save changes
+            _context.SaveChanges();
+        }
+
+
+        //method to delete task from TaskDeleteViewModel
+        public void DeleteTask(TaskDeleteViewModel model)
+        {
+            //get the task from the Tasks DbSet where the task's id matches the id passed in
+            var task = _context.Tasks.Find(model.Id);
+            //remove the task from the Tasks DbSet
+            _context.Tasks.Remove(task);
+            //save changes
+            _context.SaveChanges();
+        }
+
+
+        //method to update task status from TaskUpdateStatusViewModel
+        public void UpdateTaskStatus(TaskUpdateStatusViewModel model)
+        {
+            //get the task from the Tasks DbSet where the task's id matches the id passed in
+            var task = _context.Tasks.Find(model.Id);
+            //update the task's status property
+            task.Status = model.Status;
+            //save changes
+            _context.SaveChanges();
+        }
 
     }
 
