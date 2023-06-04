@@ -4,7 +4,7 @@ using TaskManagementChallenge.Models;
 
 namespace TaskManagementChallenge.DataAccess
 {
-    public class TaskDataAccess
+    public class TaskDataAccess : ITaskDataAccess
     {
         private readonly ApplicationDbContext _context;
         //create a constructor that takes in an ApplicationDbContext object
@@ -91,6 +91,30 @@ namespace TaskManagementChallenge.DataAccess
             _context.SaveChanges();
         }
 
+
+        //method to get task from task id and return as TaskDetailsViewModel
+        public TaskDetailsViewModel GetTask(int id)
+        {
+            //get the task from the Tasks DbSet where the task's id matches the id passed in
+            var task = _context.Tasks.Where(i=>i.Id == id).FirstOrDefault();
+            //add null check
+            if (task == null)
+            {
+                return new TaskDetailsViewModel();
+            }
+            //create a new TaskDetailsViewModel object
+            var model = new TaskDetailsViewModel
+            {
+                Id = task.Id,
+                Name = task.Name,
+                Description = task.Description,
+                Status = task.Status,
+                CreatedBy = task.CreatedBy
+            };
+            //return the model
+            return model;
+        }
+       
     }
 
 }
